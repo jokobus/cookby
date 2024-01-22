@@ -1,0 +1,109 @@
+% Feel free to use and modify for personal use. 
+% If you have any issues or ideas, feel free to contribute: 
+% https://github.com/jokobus/cookby
+
+\ProvidesPackage{cookby}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{geometry}
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm, includeheadfoot}
+
+\RequirePackage{graphicx}
+\RequirePackage{times}
+\RequirePackage{xcolor}
+\RequirePackage{amsthm}
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{parskip}
+\RequirePackage{xargs}
+\RequirePackage{nicefrac}
+\RequirePackage{hyperref}
+	\hypersetup{
+		hidelinks,
+		pdftitle={Jokobus Cookbook},
+		pdfpagemode=FullScreen,
+		bookmarksnumbered = true,
+		linkcolor = black, 
+		plainpages = false,
+		hypertexnames = false,
+		citecolor = black,
+		urlcolor=black
+	}
+
+%% To change the section title font from sans to roman
+\addtokomafont{disposition}{\rmfamily}
+
+%% Language Setup Commands
+\providecommand{\RecipesinLanguage}[1]{\def\@RecipesinLanguage{#1}}
+\providecommand{\CookbookinLanguage}[1]{\def\@CookbookinLanguage{#1}}
+\providecommand{\PageinLanguage}[1]{\def\@PageinLanguage{#1}}
+\providecommand{\VersioninLanguage}[1]{\def\@VersioninLanguage{#1}}
+\providecommand{\MinutesinLanguage}[1]{\def\@MinutesinLanguage{#1}}		
+\providecommand{\HoursinLanguage}[1]{\def\@HoursinLanguage{#1}}
+\providecommand{\DefaultBakingSettings}[1]{\def\@DefaultBakingSettings{#1}}		
+% \providecommand*{\email}[1]{\def\@email{#1}} %% Not needed, as the email address is directly connected as a link to the author's name
+\providecommand*{\website}[1]{\def\@website{\href{#1}{\today}}}
+\providecommand{\CommentColor}[1]{\def\@CommentColor{#1}}
+\renewcommand{\author}[2][]{\def\@author{\href{mailto:#1}{#2}}}
+\providecommand{\linktocontenttable}{\hyperlink{gototableofcontent}{\@CookbookinLanguage}}
+
+%% For titlepage
+\title{\@CookbookinLanguage}
+\date{\@website}
+
+\renewcommand\contentsname{\hypertarget{gototableofcontent}{\@RecipesinLanguage}}
+%\addtocontents{toc}{~\hfill\textbf{\PageinLanguage}\par}
+
+%% Set Header and Footer
+\RequirePackage{scrlayer-scrpage}
+\ohead{\@VersioninLanguage: \@website}
+%\chead{upper center}
+%\ihead{left upper corner}
+\cfoot{\linktocontenttable}
+\ofoot{\@author} % right lower corner
+\ifoot{\thepage} % left lower corner
+
+
+%% Centering the section titles
+\addtokomafont{section}{\centering}
+\addtokomafont{subsection}{\centering}
+\addtokomafont{subsubsection}{\centering}
+
+%% Removing the section numbering
+\renewcommand\thesection{}
+\renewcommand\thesubsection{}
+\renewcommand\thesubsubsection{}
+
+%% Custom list styles
+\newlist{ingredients}{enumerate}{2}
+\setlist[ingredients,1]{label={}}
+\setlist[ingredients,2]{label={}}
+
+\let\oldsubitem\subitem\renewcommand{\subitem}[1][\@CommentColor]{\small \color{#1} \oldsubitem}
+\let\olditem\item\renewcommand{\item}[1][black]{\normalfont \normalsize \normalcolor\olditem}
+
+%% New comment environment (like a list of only the subitems, use \citem instead of \item)
+\newenvironmentx{comment}[1][1=\@CommentColor]{\small\color{#1}\begin{itemize}[leftmargin=1.75cm]}{\end{itemize}}
+\renewcommand{\labelitemi}{}
+\newcommand{\citem}[1][\@CommentColor]{\small\color{#1} \olditem}
+
+%% Custom command for comments below the section title
+\providecommandx{\normalcomment}[2][1=black]{{\color{#1} \centering #2 \par}}
+\providecommandx{\smallcomment}[2][1=\@CommentColor]{{\small \color{#1} \centering \small #2 \par}}
+\providecommandx{\leftcomment}[2][1=\@CommentColor]{{\small \color{#1} #2 \par}}
+\providecommandx{\finalcomment}[2][1=\@CommentColor]{{\small \color{#1} \vfill \centering \small #2 \par}}
+
+%% Custom command for baking instructions
+\providecommandx{\baking}[5][1={}, 3=\@DefaultBakingSettings, 5={}]{{\centering \vfill #1\par #2$^{\circ}$C #3 \par #4 \@MinutesinLanguage \par \small \color{\@CommentColor} #5 \par \vspace{2ex}}}
+\providecommandx{\prebaking}[5][1={}, 3=\@DefaultBakingSettings, 5={}]{{\centering \vspace*{5ex}#1\par #2$^{\circ}$C #3 \par #4 \@MinutesinLanguage \par \small \color{\@CommentColor} #5 \par \vspace{2ex}}}
+
+%% Custom command for waiting instructions
+\providecommandx{\waiting}[4][2=\@HoursinLanguage, 4={}]{{\centering \vfill #1 #2\hspace*{0.5pt} #3 \par \small \color{\@CommentColor}#4 \par\vspace{2ex}}}
+\providecommandx{\prewaiting}[4][2=\@HoursinLanguage, 4={}]{{\centering \vspace*{5ex} #1 #2\hspace*{0.5pt} #3 \par \small \color{\@CommentColor}#4 \par\vspace{2ex}}}
+
+%% End
+
+
+
+
+
