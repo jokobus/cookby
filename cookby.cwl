@@ -31,7 +31,15 @@
 \leftcomment{my left aligned comment}
 \finalcomment{my final comment}
 
+# Custom fraction commands
+\onetwo
+\onethree
+\twothree
+\onefour
+\threefour
+\oneonetwo
+
 # Some commands that seem to have been forgotten natively in TeXstudio
 \includegraphics{image.jpg}
 \color{color}
-\nicefrac{numerator}{denominator}
+\nicefrac{numerator}{denominator}	
